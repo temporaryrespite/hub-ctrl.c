@@ -214,6 +214,9 @@ usb_find_hubs (int listing, int verbose, int busnum, int devnum, int hub)
 
 	      usb_close (uh);
 	    }
+          else {
+            fprintf (stderr, "Cannot usb_open while searching for hubs. Are you sure you're root?!\n");
+          }
 	}
     }
 
