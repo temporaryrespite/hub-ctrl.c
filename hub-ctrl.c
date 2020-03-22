@@ -270,6 +270,9 @@ main (int argc, const char *argv[])
   usb_dev_handle *uh = NULL;
   int i;
 
+  if ( 1 == argc )
+      exit_with_usage (argv[0]);
+
   if (argc == 1)
     listing = 1;
 
