@@ -367,8 +367,13 @@ main (int argc, const char *argv[])
   if (hub < 0)
     hub = get_hub (busnum, devnum);
 
-  if (hub >= 0 && hub < number_of_hubs_with_feature)
+  if (hub >= 0 && hub < number_of_hubs_with_feature) {
+    if (verbose)
+      fprintf(stderr, " Opening...\n");
     uh = usb_open (hubs[hub].dev);
+  } else {
+    fprintf(stderr, "Not even opening, hub=%d number_of_hubs_with_feature=%d\n",hub, number_of_hubs_with_feature);
+  }
 
   if (uh == NULL)
     {
