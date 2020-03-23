@@ -16,6 +16,13 @@
 #define USB_RT_HUB			(USB_TYPE_CLASS | USB_RECIP_DEVICE)
 #define USB_RT_PORT			(USB_TYPE_CLASS | USB_RECIP_OTHER)
 #define USB_PORT_FEAT_POWER		8
+
+#define USB_PORT_FEAT_ENABLE    1
+#define USB_PORT_FEAT_RESET   4
+#define USB_PORT_FEAT_SUSPEND   2 /* L2 suspend */
+#define USB_PORT_FEAT_L1    5 /* L1 suspend */
+
+
 #define USB_PORT_FEAT_INDICATOR         22
 #define USB_DIR_IN			0x80		/* to host */
 
@@ -387,13 +394,15 @@ main (int argc, const char *argv[])
 	if (value)
 	  {
 	    request = USB_REQ_SET_FEATURE;
-	    feature = USB_PORT_FEAT_POWER;
+	    feature = USB_PORT_FEAT_POWER;// | USB_PORT_FEAT_ENABLE;
 	    index = port;
 	  }
 	else
 	  {
 	    request = USB_REQ_CLEAR_FEATURE;
-	    feature = USB_PORT_FEAT_POWER;
+	    feature = USB_PORT_FEAT_POWER; //doneFIXME: put this back!
+	    //feature = USB_PORT_FEAT_SUSPEND | USB_PORT_FEAT_ENABLE ;
+	    //feature = USB_PORT_FEAT_ENABLE ; //well, it gets auto re-enabled shortly
 	    index = port;
 	  }
       else
