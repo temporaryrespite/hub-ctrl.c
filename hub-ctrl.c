@@ -71,7 +71,7 @@ hub_port_status (usb_dev_handle *uh, int nport)
 {
   int i;
 
-  printf(" Hub Port Status:\n");
+  printf(" Hub Port Status(nport=%d):\n", nport);
   for (i = 0; i < nport; i++)
     {
       char buf[USB_STATUS_SIZE];
@@ -209,7 +209,7 @@ usb_find_hubs (int listing, int verbose, int busnum, int devnum, int hub)
 
 	      number_of_hubs_with_feature++;
 
-	      if (verbose)
+	      if ((verbose) && (print))
 		hub_port_status (uh, nport);
 
 	      usb_close (uh);
@@ -355,6 +355,7 @@ main (int argc, const char *argv[])
   usb_find_busses ();
   usb_find_devices ();
 
+  //fprintf (stderr, "hub=%d\n", hub);
   if (usb_find_hubs (listing, verbose, busnum, devnum, hub) <= 0)
     {
       fprintf (stderr, "No hubs found.\n");
@@ -369,7 +370,7 @@ main (int argc, const char *argv[])
 
   if (hub >= 0 && hub < number_of_hubs_with_feature) {
     if (verbose)
-      fprintf(stderr, " Opening...\n");
+      fprintf(stdout, " Opening... hub=%d\n", hub);
     uh = usb_open (hubs[hub].dev);
   } else {
     fprintf(stderr, "Not even opening, hub=%d number_of_hubs_with_feature=%d\n",hub, number_of_hubs_with_feature);
